@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+@theme {
+  --color-syncro: #4915ed;
+  --color-syncro-light: #f0f1ff;
+  --color-syncro-dark: #3610b8;
+  --color-surface: #09090b;
+  --color-surface-card: #131316;
+  --color-surface-hover: #1c1c21;
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+html {
+  scroll-behavior: smooth;
+}
