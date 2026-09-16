@@ -4,7 +4,12 @@ import { useEffect, useRef } from "react";
 
 const VERT = `attribute vec2 p;void main(){gl_Position=vec4(p,0.0,1.0);}`;
 
-const FRAG = `precision highp float;
+const FRAG = `
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+#else
+precision mediump float;
+#endif
 uniform vec2 res;
 uniform float time;
 
@@ -54,8 +59,8 @@ void main(){
   vec3 col = mix(deep, mid, smoothstep(0.08, 0.52, f));
   col = mix(col, hi, smoothstep(0.55, 0.92, f));
 
-  float g = hash(gl_FragCoord.xy + vec2(time * 60.0)) - 0.5;
-  col += g * 0.10;
+  float g = hash(gl_FragCoord.xy * 0.5 + fract(time) * 37.0) - 0.5;
+  col += g * 0.02;
 
   float vig = 1.0 - 0.45 * length(uv - 0.5);
   col *= vig;
@@ -114,7 +119,7 @@ export default function SilkBackground({ className = "" }) {
     const uTime = gl.getUniformLocation(prog, "time");
 
     function resize() {
-      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = canvas.offsetWidth * dpr;
       canvas.height = canvas.offsetHeight * dpr;
       gl.viewport(0, 0, canvas.width, canvas.height);
@@ -148,8 +153,15 @@ export default function SilkBackground({ className = "" }) {
   }, []);
 
   return (
-    <div className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`} aria-hidden="true">
-      <canvas ref={canvasRef} className="h-full w-full" />
+    <div
+      className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`}
+      aria-hidden="true"
+      style={{
+        background:
+          "radial-gradient(ellipse at 30% 40%, #2a0f7a 0%, #12063a 45%, #09090b 100%)",
+      }}
+    >
+      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
     </div>
   );
 }
