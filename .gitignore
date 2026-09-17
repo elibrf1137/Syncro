@@ -1,7 +1,5 @@
-node_modules
-.next
-out
-dist
+node_modules/
+.wrangler/
+.vercel/
 .DS_Store
-*.local
-.env*
+Thumbs.db
