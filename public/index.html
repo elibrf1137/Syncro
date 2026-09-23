@@ -352,7 +352,7 @@ h1,h2,h3,h4,p{margin:0}
 .card__cover--grain::before{content:"";position:absolute;inset:0;background:var(--img-dark) 30% 50%/260% auto no-repeat;opacity:.55;mix-blend-mode:screen}
 
 /* Portada con capturas reales (Izanagi): navegador + móvil */
-.card__cover--shot{background:#141414;place-items:stretch}
+.card__cover--shot{background:var(--shot-bg,#141414);place-items:stretch}
 .shot-browser{
   position:absolute;left:8%;top:13%;width:112%;z-index:1;
   border-radius:8px;overflow:hidden;background:#0d0d0d;
@@ -368,12 +368,19 @@ h1,h2,h3,h4,p{margin:0}
 }
 .shot-phone img{display:block;width:100%;height:auto}
 .shot-name{
-  position:absolute;right:8%;bottom:9%;z-index:2;text-align:right;color:#F0F1FF;
+  position:absolute;right:8%;bottom:9%;z-index:2;text-align:right;color:var(--shot-fg,#F0F1FF);
   font-family:var(--font-display);font-weight:400;font-size:clamp(18px,1.7vw,26px);letter-spacing:-.02em;line-height:1.1
 }
 .shot-name small{display:block;font-family:var(--font-body);font-weight:600;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;opacity:.6;margin-top:6px}
 @media (hover:hover){.card:hover .shot-browser{transform:translateY(-6px)}.card:hover .shot-phone{transform:translateY(-10px)}}
 .card__kind--real{color:var(--violet)}
+/* Webs modelo: la tarjeta entera es un enlace a la web publicada */
+a.card{display:block;color:inherit;text-decoration:none;-webkit-user-drag:none}
+.card--site .card__name{transition:color .3s}
+.card__open{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;letter-spacing:.04em;color:var(--violet);white-space:nowrap}
+.card__open svg{width:13px;height:13px;transform:rotate(-45deg);transition:transform .4s var(--ease)}
+@media (hover:hover){.card--site:hover .card__name{color:var(--violet)}.card--site:hover .card__open svg{transform:rotate(-45deg) translateX(3px)}}
+.card--site:focus-visible{outline:2px solid var(--violet);outline-offset:6px}
 
 /* Mini maqueta de web dentro de la portada */
 .mock{
@@ -474,7 +481,9 @@ h1,h2,h3,h4,p{margin:0}
 .cursor.is-link{width:44px;height:44px;margin:-22px 0 0 -22px;background:rgba(73,21,237,.18)}
 .cursor.is-drag{width:84px;height:84px;margin:-42px 0 0 -42px;background:var(--violet)}
 .cursor__t{position:absolute;inset:0;display:grid;place-items:center;color:var(--glacial);font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;opacity:0;transition:opacity .2s}
-.cursor.is-drag .cursor__t{opacity:1}
+.cursor.is-drag .cursor__t--drag{opacity:1}
+.cursor.is-drag.is-view .cursor__t--drag{opacity:0}
+.cursor.is-drag.is-view .cursor__t--view{opacity:1}
 
 /* =========================================================
    14. RESPONSIVE (mobile-first ajustes descendentes)
@@ -724,7 +733,7 @@ h1,h2,h3,h4,p{margin:0}
     <div class="sec-head grid" style="margin-bottom:clamp(40px,5vw,72px)">
       <p class="label reveal"><span class="num">03</span><span data-i18n="work.label">Proyectos</span></p>
       <h2 class="sec-head__title reveal" id="work-t" data-i18n-html="work.title">Hecho por nosotros, <em>de principio a fin</em>.</h2>
-      <p class="sec-head__intro muted reveal" style="--d:.1s" data-i18n="work.intro">Un producto propio en desarrollo y estudios conceptuales con marcas ficticias: así afinamos el método antes de aplicarlo a tu negocio.</p>
+      <p class="sec-head__intro muted reveal" style="--d:.1s" data-i18n="work.intro">Un producto propio en desarrollo y cuatro webs completas para negocios ficticios. Ábrelas y navégalas: así trabajamos antes de hacerlo con tu negocio.</p>
     </div>
   </div>
 
@@ -749,43 +758,45 @@ h1,h2,h3,h4,p{margin:0}
       <div class="card__tags"><span class="tag">Web app</span><span class="tag" data-i18n="work.booking">Reservas</span><span class="tag">Next.js</span></div>
     </article>
 
-    <article class="card">
-      <div class="card__cover" style="--c-bg:#E9DFCC;--c-fg:#4A2E1C;--c-acc:#4A2E1C;--m-bg:#F7F2E9">
-        <div class="card__mark mark-olmo" aria-hidden="true">olmo<i></i></div>
-        <div class="mock" aria-hidden="true"><div class="mock__dots"><i></i><i></i><i></i></div><div class="mock__l mock__l--h"></div><div class="mock__l"></div><div class="mock__l mock__l--s"></div></div>
+    <a class="card card--site" href="/proyectos/olmo/" target="_blank" rel="noopener" draggable="false">
+      <div class="card__cover card__cover--shot" style="--shot-bg:#EADFCB;--shot-fg:#231B15">
+        <div class="shot-browser" aria-hidden="true"><div class="shot-browser__bar"><i></i><i></i><i></i></div><img src="/img/work/olmo-web.webp" alt="" width="1120" height="700" loading="lazy" decoding="async" draggable="false"></div>
+        <div class="shot-phone" aria-hidden="true"><img src="/img/work/olmo-movil.webp" alt="" width="360" height="780" loading="lazy" decoding="async" draggable="false"></div>
+        <p class="shot-name" aria-hidden="true">Olmo<small data-i18n="work.live">Web navegable</small></p>
       </div>
       <div class="card__meta"><div><h3 class="card__name">Olmo</h3><p class="card__sector" data-i18n="work.p1s">Panadería de barrio</p></div><span class="label card__kind muted" data-i18n="work.concept">Conceptual</span></div>
-      <div class="card__tags"><span class="tag" data-i18n="svc.1t">Identidad de marca</span><span class="tag" data-i18n="work.orders">Pedidos online</span></div>
-    </article>
+      <div class="card__tags"><span class="tag" data-i18n="svc.1t">Identidad de marca</span><span class="tag" data-i18n="work.orders">Pedidos online</span><span class="card__open"><span data-i18n="work.view">Ver web</span> <svg aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="sr-only" data-i18n="work.newTab">(se abre en otra pestaña)</span></div>
+    </a>
 
-    <article class="card">
-      <div class="card__cover" style="--c-bg:#CFDAD2;--c-fg:#1F3A2E;--c-acc:#1F3A2E;--m-bg:#F2F5F1">
-        <div class="card__mark mark-kaia" aria-hidden="true">KAIA<small>FISIOTERAPIA</small></div>
-        <div class="mock" aria-hidden="true"><div class="mock__dots"><i></i><i></i><i></i></div><div class="mock__l mock__l--h"></div><div class="mock__l"></div><div class="mock__l mock__l--s"></div></div>
+    <a class="card card--site" href="/proyectos/kaia/" target="_blank" rel="noopener" draggable="false">
+      <div class="card__cover card__cover--shot" style="--shot-bg:#1E3B30;--shot-fg:#F0F1FF">
+        <div class="shot-browser" aria-hidden="true"><div class="shot-browser__bar"><i></i><i></i><i></i></div><img src="/img/work/kaia-web.webp" alt="" width="1120" height="700" loading="lazy" decoding="async" draggable="false"></div>
+        <div class="shot-phone" aria-hidden="true"><img src="/img/work/kaia-movil.webp" alt="" width="360" height="780" loading="lazy" decoding="async" draggable="false"></div>
+        <p class="shot-name" aria-hidden="true">Kaia<small data-i18n="work.live">Web navegable</small></p>
       </div>
       <div class="card__meta"><div><h3 class="card__name">Kaia</h3><p class="card__sector" data-i18n="work.p2s">Clínica de fisioterapia</p></div><span class="label card__kind muted" data-i18n="work.concept">Conceptual</span></div>
-      <div class="card__tags"><span class="tag">Web</span><span class="tag" data-i18n="work.booking">Reservas</span></div>
-    </article>
+      <div class="card__tags"><span class="tag">Web</span><span class="tag" data-i18n="work.booking">Reservas</span><span class="card__open"><span data-i18n="work.view">Ver web</span> <svg aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="sr-only" data-i18n="work.newTab">(se abre en otra pestaña)</span></div>
+    </a>
 
-    <article class="card">
-      <div class="card__cover" style="--c-bg:#232323;--c-fg:#E4DED3;--c-acc:#B5532C;--m-bg:#2E2E2E">
-        <div class="card__mark mark-ferro" aria-hidden="true">FERR<b></b></div>
-        <div class="mock" aria-hidden="true" style="color:#E4DED3"><div class="mock__dots"><i></i><i></i><i></i></div><div class="mock__l mock__l--h"></div><div class="mock__l"></div><div class="mock__l mock__l--s"></div></div>
+    <a class="card card--site" href="/proyectos/ferro/" target="_blank" rel="noopener" draggable="false">
+      <div class="card__cover card__cover--shot" style="--shot-bg:#FF5A1F;--shot-fg:#0B0B0B">
+        <div class="shot-browser" aria-hidden="true"><div class="shot-browser__bar"><i></i><i></i><i></i></div><img src="/img/work/ferro-web.webp" alt="" width="1120" height="700" loading="lazy" decoding="async" draggable="false"></div>
+        <div class="shot-phone" aria-hidden="true"><img src="/img/work/ferro-movil.webp" alt="" width="360" height="780" loading="lazy" decoding="async" draggable="false"></div>
+        <p class="shot-name" aria-hidden="true">Ferro<small data-i18n="work.live">Web navegable</small></p>
       </div>
       <div class="card__meta"><div><h3 class="card__name">Ferro</h3><p class="card__sector" data-i18n="work.p3s">Taller de bicicletas</p></div><span class="label card__kind muted" data-i18n="work.concept">Conceptual</span></div>
-      <div class="card__tags"><span class="tag">Web</span><span class="tag" data-i18n="svc.3c">Catálogo</span></div>
-    </article>
+      <div class="card__tags"><span class="tag">Web</span><span class="tag" data-i18n="work.appts">Citas</span><span class="card__open"><span data-i18n="work.view">Ver web</span> <svg aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="sr-only" data-i18n="work.newTab">(se abre en otra pestaña)</span></div>
+    </a>
 
-    <article class="card">
-      <div class="card__cover" style="--c-bg:#15233B;--c-fg:#E7E1D4;--c-acc:#8FB3C9;--m-bg:#E7E1D4">
-        <div class="card__mark mark-marea" aria-hidden="true">marea
-          <svg viewBox="0 0 200 16" preserveAspectRatio="none"><path d="M0 8 Q12.5 0 25 8 T50 8 T75 8 T100 8 T125 8 T150 8 T175 8 T200 8" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-        </div>
-        <div class="mock" aria-hidden="true" style="color:#15233B"><div class="mock__dots"><i></i><i></i><i></i></div><div class="mock__l mock__l--h" style="background:#15233B"></div><div class="mock__l"></div><div class="mock__l mock__l--s"></div></div>
+    <a class="card card--site" href="/proyectos/marea/" target="_blank" rel="noopener" draggable="false">
+      <div class="card__cover card__cover--shot" style="--shot-bg:#E7E1D4;--shot-fg:#0E0F10">
+        <div class="shot-browser" aria-hidden="true"><div class="shot-browser__bar"><i></i><i></i><i></i></div><img src="/img/work/marea-web.webp" alt="" width="1120" height="700" loading="lazy" decoding="async" draggable="false"></div>
+        <div class="shot-phone" aria-hidden="true"><img src="/img/work/marea-movil.webp" alt="" width="360" height="780" loading="lazy" decoding="async" draggable="false"></div>
+        <p class="shot-name" aria-hidden="true">Marea<small data-i18n="work.live">Web navegable</small></p>
       </div>
       <div class="card__meta"><div><h3 class="card__name">Marea</h3><p class="card__sector" data-i18n="work.p4s">Taberna marinera</p></div><span class="label card__kind muted" data-i18n="work.concept">Conceptual</span></div>
-      <div class="card__tags"><span class="tag" data-i18n="svc.1t">Identidad de marca</span><span class="tag">Web</span><span class="tag" data-i18n="work.booking">Reservas</span></div>
-    </article>
+      <div class="card__tags"><span class="tag" data-i18n="svc.1t">Identidad de marca</span><span class="tag">Web</span><span class="tag" data-i18n="work.booking">Reservas</span><span class="card__open"><span data-i18n="work.view">Ver web</span> <svg aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="sr-only" data-i18n="work.newTab">(se abre en otra pestaña)</span></div>
+    </a>
   </div>
 
   <div class="wrap">
@@ -948,7 +959,7 @@ h1,h2,h3,h4,p{margin:0}
 
 </main>
 
-<div class="cursor" id="cursor" aria-hidden="true"><span class="cursor__t" data-i18n="cursor.drag">Arrastra</span></div>
+<div class="cursor" id="cursor" aria-hidden="true"><span class="cursor__t cursor__t--drag" data-i18n="cursor.drag">Arrastra</span><span class="cursor__t cursor__t--view" data-i18n="cursor.view">Ver web</span></div>
 
 <script>
 /* =========================================================
@@ -1001,11 +1012,12 @@ h1,h2,h3,h4,p{margin:0}
       "svc.5t": "Apps a medida", "svc.5d": "Próximamente. Cuando tu negocio necesite algo más que una web, estaremos preparados.",
       "work.label": "Proyectos",
       "work.title": "Hecho por nosotros, <em>de principio a fin</em>.",
-      "work.intro": "Un producto propio en desarrollo y estudios conceptuales con marcas ficticias: así afinamos el método antes de aplicarlo a tu negocio.",
+      "work.intro": "Un producto propio en desarrollo y cuatro webs completas para negocios ficticios. Ábrelas y navégalas: así trabajamos antes de hacerlo con tu negocio.",
       "work.izS": "Reservas y gestión para estudios de tatuaje", "work.dev": "En desarrollo", "work.izCover": "Web app",
       "work.izAlt": "Izanagi en el móvil: feed de piezas de tatuaje filtrable por estilo",
       "work.rail": "Proyectos (desplazable)", "work.prev": "Proyecto anterior", "work.next": "Proyecto siguiente",
       "work.own": "Caso 00", "work.concept": "Conceptual",
+      "work.view": "Ver web", "work.live": "Web navegable", "work.newTab": "(se abre en otra pestaña)", "work.appts": "Citas",
       "work.p0s": "Nuestra propia marca", "work.p1s": "Panadería de barrio", "work.p2s": "Clínica de fisioterapia",
       "work.p3s": "Taller de bicicletas", "work.p4s": "Taberna marinera",
       "work.orders": "Pedidos online", "work.booking": "Reservas",
@@ -1032,7 +1044,7 @@ h1,h2,h3,h4,p{margin:0}
       "contact.cta": "Escríbenos",
       "foot.p": "Branding y desarrollo web para negocios locales.", "foot.nav": "Navegación", "foot.studio": "Estudio",
       "foot.lang": "Idioma", "foot.made": "Hecho en Pontevedra", "foot.top": "Volver arriba ↑",
-      "cursor.drag": "Arrastra"
+      "cursor.drag": "Arrastra", "cursor.view": "Ver web"
     },
     en: {
       "meta.title": "Syncro — Branding & web for local businesses",
@@ -1068,11 +1080,12 @@ h1,h2,h3,h4,p{margin:0}
       "svc.5t": "Custom apps", "svc.5d": "Coming soon. When your business needs more than a website, we'll be ready.",
       "work.label": "Work",
       "work.title": "Built by us, <em>start to finish</em>.",
-      "work.intro": "An in-house product in development and concept studies with fictional brands: this is how we sharpen our method before applying it to your business.",
+      "work.intro": "An in-house product in development and four complete websites for fictional businesses. Open them and click around: this is how we work before doing it for yours.",
       "work.izS": "Booking and management for tattoo studios", "work.dev": "In development", "work.izCover": "Web app",
       "work.izAlt": "Izanagi on mobile: tattoo feed filterable by style",
       "work.rail": "Projects (scrollable)", "work.prev": "Previous project", "work.next": "Next project",
       "work.own": "Case 00", "work.concept": "Concept",
+      "work.view": "View site", "work.live": "Live site", "work.newTab": "(opens in a new tab)", "work.appts": "Appointments",
       "work.p0s": "Our own brand", "work.p1s": "Neighbourhood bakery", "work.p2s": "Physiotherapy clinic",
       "work.p3s": "Bicycle workshop", "work.p4s": "Seafood tavern",
       "work.orders": "Online orders", "work.booking": "Bookings",
@@ -1099,7 +1112,7 @@ h1,h2,h3,h4,p{margin:0}
       "contact.cta": "Write to us",
       "foot.p": "Branding and web development for local businesses.", "foot.nav": "Navigation", "foot.studio": "Studio",
       "foot.lang": "Language", "foot.made": "Made in Pontevedra", "foot.top": "Back to top ↑",
-      "cursor.drag": "Drag"
+      "cursor.drag": "Drag", "cursor.view": "View"
     }
   };
 
@@ -1210,6 +1223,7 @@ h1,h2,h3,h4,p{margin:0}
       }
     });
     rail.addEventListener("click", function (e) { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
+    rail.addEventListener("dragstart", function (e) { e.preventDefault(); });
 
     function stepSize() { var c = rail.querySelector(".card"); return c.offsetWidth + parseFloat(getComputedStyle(rail).columnGap || 0); }
     prev.addEventListener("click", function () { rail.scrollBy({ left: -stepSize(), behavior: reduceMotion ? "auto" : "smooth" }); });
@@ -1243,6 +1257,7 @@ h1,h2,h3,h4,p{margin:0}
       cursor.classList.add("is-on");
       var t = e.target;
       cursor.classList.toggle("is-drag", !!(t.closest && t.closest("#rail")));
+      cursor.classList.toggle("is-view", !!(t.closest && t.closest("#rail a.card")));
       cursor.classList.toggle("is-link", !!(t.closest && t.closest("a, button")) && !cursor.classList.contains("is-drag"));
     }, { passive: true });
     document.addEventListener("mouseleave", function () { cursor.classList.remove("is-on"); });
